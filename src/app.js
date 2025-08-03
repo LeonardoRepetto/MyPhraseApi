@@ -9,7 +9,7 @@ const phrasesRoutes = require('./routes/phrases');
 const { errorHandler } = require('./middleware/errorHandler');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 10000;
 
 // Security middleware
 app.use(helmet());
