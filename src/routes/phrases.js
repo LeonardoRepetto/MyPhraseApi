@@ -2,26 +2,27 @@ const express = require('express');
 const router = express.Router();
 const phrasesController = require('../controllers/phrasesController');
 const { validatePhrase } = require('../middleware/validation');
+const { requireAuth, requireValidOrigin } = require('../middleware/auth');
 
-// GET all phrases
-router.get('/', phrasesController.getAllPhrases);
+// GET all phrases - Requiere autenticación
+router.get('/', requireAuth, phrasesController.getAllPhrases);
 
-// GET phrase by ID
-router.get('/:id', phrasesController.getPhraseById);
+// GET phrase by ID - Requiere autenticación
+router.get('/:id', requireAuth, phrasesController.getPhraseById);
 
-// POST create new phrase
-router.post('/', validatePhrase, phrasesController.createPhrase);
+// POST create new phrase - Requiere autenticación
+router.post('/', requireAuth, validatePhrase, phrasesController.createPhrase);
 
-// PUT update phrase
-router.put('/:id', validatePhrase, phrasesController.updatePhrase);
+// PUT update phrase - Requiere autenticación
+router.put('/:id', requireAuth, validatePhrase, phrasesController.updatePhrase);
 
-// DELETE phrase
-router.delete('/:id', phrasesController.deletePhrase);
+// DELETE phrase - Requiere autenticación
+router.delete('/:id', requireAuth, phrasesController.deletePhrase);
 
-// GET random phrase
-router.get('/random/one', phrasesController.getRandomPhrase);
+// GET random phrase - Solo requiere origen válido
+router.get('/random/one', requireValidOrigin, phrasesController.getRandomPhrase);
 
-// GET multiple random phrases
-router.get('/random/:count', phrasesController.getRandomPhrases);
+// GET multiple random phrases - Solo requiere origen válido
+router.get('/random/:count', requireValidOrigin, phrasesController.getRandomPhrases);
 
 module.exports = router; 

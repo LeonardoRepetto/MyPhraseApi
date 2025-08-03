@@ -7,6 +7,7 @@ require('dotenv').config();
 
 const phrasesRoutes = require('./routes/phrases');
 const { errorHandler } = require('./middleware/errorHandler');
+const { publicEndpoint } = require('./middleware/auth');
 
 const app = express();
 const PORT = process.env.PORT || 10000;
@@ -35,8 +36,8 @@ app.use(morgan('combined'));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
-// Health check endpoint
-app.get('/health', (req, res) => {
+// Health check endpoint - Público pero con protección básica
+app.get('/health', publicEndpoint, (req, res) => {
   res.status(200).json({
     status: 'OK',
     timestamp: new Date().toISOString(),
