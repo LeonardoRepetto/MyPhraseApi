@@ -188,7 +188,35 @@ All API responses follow a consistent format:
 
 ## 🚀 Deployment
 
-### Production Setup
+### Render (Recomendado)
+
+1. **Crear cuenta en Render**:
+   - Ve a [render.com](https://render.com)
+   - Crea una cuenta gratuita
+
+2. **Conectar repositorio**:
+   - Conecta tu repositorio de GitHub
+   - Selecciona `MyPhraseApi`
+
+3. **Configurar servicio**:
+   - **Tipo**: Web Service
+   - **Build Command**: `npm install`
+   - **Start Command**: `npm start`
+   - **Plan**: Free
+
+4. **Variables de entorno en Render**:
+   ```
+   NODE_ENV=production
+   PORT=10000
+   ALLOWED_ORIGINS=https://myphraseapi.onrender.com,http://localhost:3000
+   ```
+
+5. **URL de tu API**:
+   ```
+   https://myphraseapi.onrender.com
+   ```
+
+### Production Setup (Local)
 
 1. Set environment variables:
 ```bash
