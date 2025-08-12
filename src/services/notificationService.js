@@ -1,10 +1,38 @@
 const admin = require('firebase-admin');
+const fs = require('fs');
+const path = require('path');
 
 // Inicializar Firebase Admin con las credenciales
 let firebaseInitialized = false;
 
 try {
-  const serviceAccount = require('../../google_application_credential.json');
+  let serviceAccount;
+  
+  // Verificar si estamos en producción (con credenciales en variables de entorno)
+  if (process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON) {
+    console.log('🚀 Configurando Firebase Admin para PRODUCCIÓN...');
+    
+    // Crear archivo temporal con las credenciales
+    const credentials = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON);
+    const tempPath = '/tmp/firebase-credentials.json';
+    
+    fs.writeFileSync(tempPath, JSON.stringify(credentials));
+    serviceAccount = tempPath;
+    
+    console.log('✅ Credenciales de producción configuradas');
+  } else {
+    // Desarrollo: usar archivo local
+    console.log('🛠️  Configurando Firebase Admin para DESARROLLO...');
+    
+    const localPath = path.join(__dirname, '../../google_application_credential.json');
+    
+    if (fs.existsSync(localPath)) {
+      serviceAccount = localPath;
+      console.log('✅ Archivo de credenciales local encontrado');
+    } else {
+      throw new Error('No se encontraron credenciales de Firebase. Verifica que google_application_credential.json exista en la raíz del proyecto.');
+    }
+  }
   
   // Verificar si ya está inicializado
   if (!admin.apps.length) {
