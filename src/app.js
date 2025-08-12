@@ -6,6 +6,7 @@ const rateLimit = require('express-rate-limit');
 require('dotenv').config();
 
 const phrasesRoutes = require('./routes/phrases');
+const notificationsRoutes = require('./routes/notifications');
 const { errorHandler } = require('./middleware/errorHandler');
 const { publicEndpoint } = require('./middleware/auth');
 
@@ -47,6 +48,7 @@ app.get('/health', publicEndpoint, (req, res) => {
 
 // API routes
 app.use('/api/phrases', phrasesRoutes);
+app.use('/api/notifications', notificationsRoutes);
 
 // Root endpoint
 app.get('/', (req, res) => {

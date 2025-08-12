@@ -11,6 +11,10 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 
+# Firebase credentials
+config/firebase/*.json
+firebase-credentials.json
+
 # Logs
 logs
 *.log
@@ -107,4 +111,4 @@ temp/
 .Spotlight-V100
 .Trashes
 ehthumbs.db
-Thumbs.db 
+Thumbs.db google_application_credential.json
